@@ -1,6 +1,11 @@
 const bookList = document.querySelector('[data-book-list]');
 const prototypeCard = document.getElementsByTagName("template")[0];
-
+const submit = document.querySelector('[data-submit]');
+const form = document.getElementById('form');
+const title = form.querySelector('#title');
+const author = form.querySelector('#author');
+const pages = form.querySelector('#pages');
+const read = form.querySelector('#finished');
 
 let myLibrary = [];
 
@@ -48,7 +53,45 @@ for (let book of myLibrary) {
     bookList.appendChild(newCard);
 }
 
-const trashCan = newCard.querySelector('[data-card-delete]');
-trashCan.addEventListener("click", () => {
+submit.addEventListener('click', (e) => {
+    let newBookTitle = title.value;
+    let newBookAuthor = author.value;
+    let newBookPages = pages.value;
+    let newBookRead;
+    if (read.value === "yes") {
+        newBookRead = true;
+    } else {
+        newBookRead = false;
+    }
+    const newBook = new Book(newBookTitle, newBookAuthor, newBookPages, newBookRead);
+    addBookToLibrary(newBook);
+    const newCard = prototypeCard.content.cloneNode(true);
 
+    const cardTitle = newCard.querySelector('[data-card-title]');
+    const cardAuthor = newCard.querySelector('[data-card-author]');
+    const cardPages = newCard.querySelector('[data-card-pages]');
+    const cardRead = newCard.querySelector('[data-card-read]')
+    const cardBg = newCard.querySelector('[data-card-background-color]')
+
+    cardTitle.innerText = newBook.title;
+    cardAuthor.innerText = newBook.author;
+    cardPages.innerText = newBook.pages;
+    if (newBook.haveRead) {
+        cardRead.setAttribute("checked", "");
+        cardBg.classList.toggle('border-2');
+        cardBg.classList.toggle('border-success');
+    };
+    cardRead.addEventListener("click", () => {
+        cardBg.classList.toggle('border-success');
+        cardBg.classList.toggle('border-2');
+    });
+
+    bookList.appendChild(newCard);
 })
+
+
+
+// const trashCan = newCard.querySelector('[data-card-delete]');
+// trashCan.addEventListener("click", () => {
+
+// })
