@@ -78,6 +78,11 @@ function addNewCard(newBook) {
         cardBg.classList.toggle('border-success');
     };
     cardRead.addEventListener("click", () => {
+        if (newBook.haveRead) {
+            newBook.haveRead = false
+        } else {
+            newBook.haveRead = true
+        };
         cardBg.classList.toggle('border-success');
         cardBg.classList.toggle('border-2');
     });
