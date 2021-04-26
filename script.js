@@ -1,11 +1,11 @@
 const bookList = document.querySelector('[data-book-list]');
 const prototypeCard = document.getElementsByTagName("template")[0];
-const submit = document.querySelector('[data-submit]');
-const form = document.getElementById('form');
-const title = form.querySelector('#title');
-const author = form.querySelector('#author');
-const pages = form.querySelector('#pages');
-const read = form.querySelector('#finished');
+const formSubmit = document.querySelector('[data-form]');
+const addNewBookButton = document.querySelector('[add-new-book-button]');
+const title = document.querySelector('#title');
+const author = document.querySelector('#author');
+const pages = document.querySelector('#pages');
+const read = document.querySelector('#finished');
 
 let myLibrary = [];
 
@@ -24,36 +24,25 @@ addBookToLibrary(dracula);
 addBookToLibrary(frankenstein);
 addBookToLibrary(it);
 
-function addBookToLibrary(newBook) {
-    myLibrary.push(newBook);
+function addBookToLibrary(book) {
+    myLibrary.push(book);
 }
 
 for (let book of myLibrary) {
-    const newCard = prototypeCard.content.cloneNode(true);
-
-    const title = newCard.querySelector('[data-card-title]');
-    const author = newCard.querySelector('[data-card-author]');
-    const pages = newCard.querySelector('[data-card-pages]');
-    const read = newCard.querySelector('[data-card-read]')
-    const cardBg = newCard.querySelector('[data-card-background-color]')
-
-    title.innerText = book.title;
-    author.innerText = book.author;
-    pages.innerText = book.pages;
-    if (book.haveRead) {
-        read.setAttribute("checked", "");
-        cardBg.classList.toggle('border-2');
-        cardBg.classList.toggle('border-success');
-    };
-    read.addEventListener("click", () => {
-        cardBg.classList.toggle('border-success');
-        cardBg.classList.toggle('border-2');
-    });
-
-    bookList.appendChild(newCard);
+    addNewCard(book)
 }
 
-submit.addEventListener('click', (e) => {
+addNewBookButton.addEventListener('click', () => {
+    addNewBookButton.classList.toggle('btn-primary');
+    addNewBookButton.classList.toggle('btn-danger');
+    if (addNewBookButton.innerText === "Add New Book") {
+        addNewBookButton.innerText = "Close"
+    } else {
+        addNewBookButton.innerHTML = "Add New Book"
+    }
+})
+
+formSubmit.addEventListener('submit', (e) => {
     let newBookTitle = title.value;
     let newBookAuthor = author.value;
     let newBookPages = pages.value;
@@ -65,6 +54,12 @@ submit.addEventListener('click', (e) => {
     }
     const newBook = new Book(newBookTitle, newBookAuthor, newBookPages, newBookRead);
     addBookToLibrary(newBook);
+
+    addNewCard(newBook);
+    e.preventDefault();
+})
+
+function addNewCard(newBook) {
     const newCard = prototypeCard.content.cloneNode(true);
 
     const cardTitle = newCard.querySelector('[data-card-title]');
@@ -72,6 +67,7 @@ submit.addEventListener('click', (e) => {
     const cardPages = newCard.querySelector('[data-card-pages]');
     const cardRead = newCard.querySelector('[data-card-read]')
     const cardBg = newCard.querySelector('[data-card-background-color]')
+    const cardDelete = newCard.querySelector('[data-card-delete]')
 
     cardTitle.innerText = newBook.title;
     cardAuthor.innerText = newBook.author;
@@ -86,12 +82,14 @@ submit.addEventListener('click', (e) => {
         cardBg.classList.toggle('border-2');
     });
 
+    cardDelete.addEventListener('click', () => {
+        bookList.innerText = "";
+        const index = myLibrary.indexOf(newBook);
+        myLibrary.splice(index, 1);
+        for (let book of myLibrary) {
+            addNewCard(book)
+        }
+    })
+
     bookList.appendChild(newCard);
-})
-
-
-
-// const trashCan = newCard.querySelector('[data-card-delete]');
-// trashCan.addEventListener("click", () => {
-
-// })
+}

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Freckle+Face&display=swap');
 * {
     font-family: 'Freckle Face', cursive;
+    box-sizing: border-box;
 }
 
 body {
