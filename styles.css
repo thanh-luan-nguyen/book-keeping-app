@@ -3,6 +3,10 @@
     font-family: 'Freckle Face', cursive;
 }
 
+html {
+    overflow-y: scroll;
+}
+
 body {
     height: 100vh;
 }

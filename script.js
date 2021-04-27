@@ -7,8 +7,6 @@ const author = document.querySelector('#author');
 const pages = document.querySelector('#pages');
 const read = document.querySelector('#finished');
 
-let myLibrary = [];
-
 function Book(title, author, pages, haveRead) {
     this.title = title;
     this.author = author;
@@ -16,20 +14,27 @@ function Book(title, author, pages, haveRead) {
     this.haveRead = haveRead;
 }
 
-const dracula = new Book("Dracula", "Bram Stoker", 418, false);
-const frankenstein = new Book("Frankenstein", "Mary Shelley", 280, true);
-const it = new Book("IT", "Stephen King", 1138, true);
+// let myLibrary = [];
+let myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+if (!myLibrary) {
+    myLibrary = [];
+    const dracula = new Book("Dracula", "Bram Stoker", 418, false);
+    const frankenstein = new Book("Frankenstein", "Mary Shelley", 280, true);
+    const it = new Book("IT", "Stephen King", 1138, true);
 
-addBookToLibrary(dracula);
-addBookToLibrary(frankenstein);
-addBookToLibrary(it);
+    addBookToLibrary(dracula);
+    addBookToLibrary(frankenstein);
+    addBookToLibrary(it);
+}
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
 }
 
+
 for (let book of myLibrary) {
-    addNewCard(book)
+    addNewCard(book);
+    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
 }
 
 addNewBookButton.addEventListener('click', () => {
@@ -83,6 +88,7 @@ function addNewCard(newBook) {
         } else {
             newBook.haveRead = true
         };
+        localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
         cardBg.classList.toggle('border-success');
         cardBg.classList.toggle('border-2');
     });
@@ -94,7 +100,10 @@ function addNewCard(newBook) {
         for (let book of myLibrary) {
             addNewCard(book)
         }
+        localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
     })
 
     bookList.appendChild(newCard);
+
+    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
 }
