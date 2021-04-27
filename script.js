@@ -1,12 +1,18 @@
-const bookList = document.querySelector('[data-book-list]');
+const cardsContainer = document.querySelector('[data-book-list]');
 const prototypeCard = document.getElementsByTagName("template")[0];
 const formSubmit = document.querySelector('[data-form]');
 const addNewBookButton = document.querySelector('[add-new-book-button]');
+
+// in the form
 const title = document.querySelector('#title');
 const author = document.querySelector('#author');
 const pages = document.querySelector('#pages');
 const read = document.querySelector('#finished');
 
+// get the array from local storage
+let myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+
+// Book constructor
 function Book(title, author, pages, haveRead) {
     this.title = title;
     this.author = author;
@@ -14,57 +20,42 @@ function Book(title, author, pages, haveRead) {
     this.haveRead = haveRead;
 }
 
-// let myLibrary = [];
-let myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+// check if the data is empy. if empty, create new books to add to the list
 if (!myLibrary) {
     myLibrary = [];
-    const dracula = new Book("Dracula", "Bram Stoker", 418, false);
-    const frankenstein = new Book("Frankenstein", "Mary Shelley", 280, true);
-    const it = new Book("IT", "Stephen King", 1138, true);
 
-    addBookToLibrary(dracula);
-    addBookToLibrary(frankenstein);
-    addBookToLibrary(it);
+    addBookToLibrary(new Book("Dracula", "Bram Stoker", 418, false));
+    addBookToLibrary(new Book("Frankenstein", "Mary Shelley", 280, true));
+    addBookToLibrary(new Book("IT", "Stephen King", 1138, true));
 }
 
-function addBookToLibrary(book) {
-    myLibrary.push(book);
-}
+printOutCards();
 
-
-for (let book of myLibrary) {
-    addNewCard(book);
-    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
-}
-
+// add new book button
 addNewBookButton.addEventListener('click', () => {
     addNewBookButton.classList.toggle('btn-primary');
     addNewBookButton.classList.toggle('btn-danger');
-    if (addNewBookButton.innerText === "Add New Book") {
-        addNewBookButton.innerText = "Close"
-    } else {
-        addNewBookButton.innerHTML = "Add New Book"
-    }
+    addNewBookButton.innerText === "Add New Book" ?
+        addNewBookButton.innerText = "Close" :
+        addNewBookButton.innerHTML = "Add New Book";
 })
 
+// when click on submit
 formSubmit.addEventListener('submit', (e) => {
-    let newBookTitle = title.value;
-    let newBookAuthor = author.value;
-    let newBookPages = pages.value;
-    let newBookRead;
-    if (read.value === "yes") {
-        newBookRead = true;
-    } else {
-        newBookRead = false;
-    }
-    const newBook = new Book(newBookTitle, newBookAuthor, newBookPages, newBookRead);
-    addBookToLibrary(newBook);
+    const newBook = new Book(
+        title.value,
+        author.value,
+        pages.value,
+        read.value === "yes" ? true : false
+    );
 
+    addBookToLibrary(newBook);
     addNewCard(newBook);
+
     e.preventDefault();
 })
 
-function addNewCard(newBook) {
+function addNewCard(book) {
     const newCard = prototypeCard.content.cloneNode(true);
 
     const cardTitle = newCard.querySelector('[data-card-title]');
@@ -74,36 +65,44 @@ function addNewCard(newBook) {
     const cardBg = newCard.querySelector('[data-card-background-color]')
     const cardDelete = newCard.querySelector('[data-card-delete]')
 
-    cardTitle.innerText = newBook.title;
-    cardAuthor.innerText = newBook.author;
-    cardPages.innerText = newBook.pages;
-    if (newBook.haveRead) {
+    cardTitle.innerText = book.title;
+    cardAuthor.innerText = book.author;
+    cardPages.innerText = book.pages;
+    if (book.haveRead) {
         cardRead.setAttribute("checked", "");
         cardBg.classList.toggle('border-2');
         cardBg.classList.toggle('border-success');
     };
     cardRead.addEventListener("click", () => {
-        if (newBook.haveRead) {
-            newBook.haveRead = false
-        } else {
-            newBook.haveRead = true
-        };
-        localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+        book.haveRead = !book.haveRead;
+        saveToStorage(myLibrary);
         cardBg.classList.toggle('border-success');
         cardBg.classList.toggle('border-2');
     });
 
     cardDelete.addEventListener('click', () => {
-        bookList.innerText = "";
-        const index = myLibrary.indexOf(newBook);
+        cardsContainer.innerText = "";
+        const index = myLibrary.indexOf(book);
         myLibrary.splice(index, 1);
-        for (let book of myLibrary) {
-            addNewCard(book)
-        }
-        localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+        printOutCards();
     })
 
-    bookList.appendChild(newCard);
+    cardsContainer.appendChild(newCard);
 
-    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    saveToStorage(myLibrary);
+}
+
+function addBookToLibrary(book) {
+    myLibrary.push(book);
+}
+
+function printOutCards() {
+    for (let book of myLibrary) {
+        addNewCard(book)
+    }
+    saveToStorage(myLibrary);
+}
+
+function saveToStorage(data) {
+    localStorage.setItem("myLibrary", JSON.stringify(data));
 }
