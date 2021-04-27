@@ -33,12 +33,14 @@ printOutCards();
 
 // add new book button
 addNewBookButton.addEventListener('click', () => {
-    addNewBookButton.classList.toggle('btn-primary');
-    addNewBookButton.classList.toggle('btn-danger');
-    addNewBookButton.innerText === "Add New Book" ?
-        addNewBookButton.innerText = "Close" :
-        addNewBookButton.innerHTML = "Add New Book";
-})
+    setTimeout(function() {
+        addNewBookButton.classList.toggle('btn-primary');
+        addNewBookButton.classList.toggle('btn-danger');
+        addNewBookButton.innerText === "Add New Book" ?
+            addNewBookButton.innerText = "Close" :
+            addNewBookButton.innerHTML = "Add New Book";
+    }, 300);
+});
 
 // when click on submit
 formSubmit.addEventListener('submit', (e) => {
@@ -53,7 +55,7 @@ formSubmit.addEventListener('submit', (e) => {
     addNewCard(newBook);
 
     e.preventDefault();
-})
+});
 
 function addNewCard(book) {
     const newCard = prototypeCard.content.cloneNode(true);
@@ -90,19 +92,19 @@ function addNewCard(book) {
     cardsContainer.appendChild(newCard);
 
     saveToStorage(myLibrary);
-}
+};
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
-}
+};
 
 function printOutCards() {
     for (let book of myLibrary) {
         addNewCard(book)
     }
     saveToStorage(myLibrary);
-}
+};
 
 function saveToStorage(data) {
     localStorage.setItem("myLibrary", JSON.stringify(data));
-}
+};
