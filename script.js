@@ -12,12 +12,14 @@ const read = document.querySelector('#finished');
 // get the array from local storage
 let myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
 
-// Book constructor
-function Book(title, author, pages, haveRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.haveRead = haveRead;
+// Book class
+class Book {
+    constructor(title, author, pages, haveRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.haveRead = haveRead;
+    }
 }
 
 // check if the data is empy. if empty, create new books to add to the list
