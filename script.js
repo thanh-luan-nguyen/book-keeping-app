@@ -57,6 +57,11 @@ formSubmit.addEventListener('submit', (e) => {
     addNewCard(newBook);
 
     e.preventDefault();
+
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    read.value = '';
 });
 
 function addNewCard(book) {
