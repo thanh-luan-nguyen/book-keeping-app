@@ -1,6 +1,6 @@
 # book-keeping app
 
-[demo](https://thanh-luan-nguyen/book-keeping-app/)
+[demo](https://thanh-luan-nguyen.github.io/book-keeping-app/)
 
 **What I accomplished**
 
