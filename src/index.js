@@ -6,41 +6,6 @@ import getBooks from './getBooks'
 
 import { setDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore'
 
-// setDoc(doc(db, 'users', 'Luan'), {
-//   first: 'Nguyen',
-//   last: 'Thanh Luan',
-//   likes: 'cats',
-// })
-//   .then(docRef => console.log('Document written with ID: ', docRef))
-//   .catch(e => console.log('Error adding document: ', e))
-
-// setDoc(doc(db, 'users', 'Luan'), { likes: 'dogs' }, { merge: true })
-
-// addDoc(collection(db, 'users'), {
-//   first: 'Luan',
-//   middle: 'Nguyen',
-//   last: 'Thanh',
-//   born: 1912,
-// })
-
-// setDoc(
-//   doc(db, 'books', 'SymKHEdJWOzuUXsxikCb'),
-//   {
-//     title: 'luan nguyen thanh',
-//   },
-//   { merge: true }
-// )
-
-// getDocs(collection(db, 'books')).then(data =>
-//   console.log(data.docs.map(doc => doc.data()))
-// )
-
-// in the form
-
-// get the array from local storage
-// let myLibrary = JSON.parse(localStorage.getItem('myLibrary'))
-
-// initialize cloud firestore
 getBooks(db).then(books => printOutCardsToUI(books))
 initButtonEffect()
 
@@ -66,7 +31,8 @@ formSubmit.addEventListener('submit', e => {
     read: read.value === 'yes' ? true : false,
   }
 
-  const id = author.value.split(' ').join('') + title.value.split(' ').join('')
+  const id =
+    '_' + author.value.split(' ').join('') + title.value.split(' ').join('')
 
   setDoc(doc(db, 'books', id), newBook)
 
@@ -83,7 +49,8 @@ formSubmit.addEventListener('submit', e => {
 
 function addNewCardToUI(book) {
   const cardsContainer = document.querySelector('[data-book-list]')
-  const id = book.author.split(' ').join('') + book.title.split(' ').join('')
+  const id =
+    '_' + book.author.split(' ').join('') + book.title.split(' ').join('')
   const newCard = `
     <div class="col-md-4" card id=${id}>
       <div class="card bg-light ${book.read && 'border-2 border-success'}">
@@ -171,9 +138,3 @@ function deleteCardUI(card) {
 function deleteCardDB(id) {
   deleteDoc(doc(db, 'books', id))
 }
-
-// Dracula
-// Bram Stoker
-// Number of Pages: 418
-
-// Done reading?
