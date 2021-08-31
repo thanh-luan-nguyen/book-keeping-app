@@ -1,0 +1,30 @@
+{
+    "name": "book-keeping-app-firebase",
+    "version": "1.0.0",
+    "description": "book keeping app",
+    "main": "script.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NGUYEN-THANH-LUAN-github/library.github.io.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/NGUYEN-THANH-LUAN-github/library.github.io/issues"
+    },
+    "homepage": "https://github.com/NGUYEN-THANH-LUAN-github/library.github.io#readme",
+    "devDependencies": {
+        "webpack": "^5.51.1",
+        "webpack-cli": "^4.8.0"
+    },
+    "dependencies": {
+        "firebase": "^9.0.0"
+    },
+    "firestore": {
+        "rules": "firestore.rules"
+    }
+}

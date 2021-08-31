@@ -1,5 +1,6 @@
-# books-keeping app (library app)
-[demo](https://nguyen-thanh-luan-github.github.io/library.github.io/) 
+# book-keeping app
+
+[demo](https://thanh-luan-nguyen/book-keeping-app/)
 
 **What I accomplished**
 
