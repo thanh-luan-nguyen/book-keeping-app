@@ -1,8 +1,9 @@
-# book-keeping app
+# 🌱 book-keeping app
 
-[demo](https://thanh-luan-nguyen.github.io/book-keeping-app/)
+[Live Demo](https://thanh-luan-nguyen.github.io/book-keeping-app/)
 
-**What I accomplished**
-
-- work with bootstrap 5.0
+> **What I accomplished**
+- work with Bootstrap 5.0
 - backend: Firebase
+
+<img src="https://github.com/thanh-luan-nguyen/thanh-luan-nguyen/blob/main/project_preview_gifs/theOdinProject/Library.gif"/>
