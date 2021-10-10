@@ -1,6 +1,8 @@
 # 🌱 book-keeping app
 
-[Live Demo](https://thanh-luan-nguyen.github.io/book-keeping-app/)
+a project from The Odin Project
+
+👉 [Live Demo](https://thanh-luan-nguyen.github.io/book-keeping-app/)
 
 > **What I accomplished**
 - work with Bootstrap 5.0
